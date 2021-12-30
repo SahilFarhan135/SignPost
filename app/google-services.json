@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "140982460402",
+    "project_id": "signpost-f4901",
+    "storage_bucket": "signpost-f4901.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140982460402:android:c3ed276d87a587049a156b",
+        "android_client_info": {
+          "package_name": "com.example.signpost"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140982460402-5beopdsoia21co7b8vtjn7apia3un07d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwsVzAya55DskvL1M5F96iz-02cs7mS_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "140982460402-5beopdsoia21co7b8vtjn7apia3un07d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

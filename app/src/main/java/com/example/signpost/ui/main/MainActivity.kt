@@ -27,16 +27,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initUi()
-        addFragmentToActivity(GraphFragment())
 
         binding.btAttendance.setOnClickListener {
-           addFragmentToActivity(GraphFragment())
         }
         addListener()
         addObservers()
     }
 
-    private fun addFragmentToActivity(fragment: Fragment?){
+    private fun addFragmentToActivity(fragment: Fragment?) {
 
         if (fragment == null) return
         val fm = supportFragmentManager
@@ -44,6 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         tr.add(R.id.frame_container, fragment)
         tr.commitAllowingStateLoss()
     }
+
     private fun addListener() {
         with(binding) {
             spnrEmployee.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -75,7 +74,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun observeViewState() {
-        _viewModel.viewState.observe(this, {
+        _viewModel.viewState.observe(this) {
             when (it) {
                 ViewState.Loading -> {
                     uiUtil.showProgress()
@@ -87,17 +86,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     uiUtil.hideProgress()
                 }
             }
-        })
+        }
     }
 
     private fun observeError() {
-        _viewModel.setError.observe(this, {
+        _viewModel.setError.observe(this) {
             showToast(it.toString())
-        })
+        }
     }
 
     private fun observeEmployeeList() {
-        _viewModel.setEmployeeList.observe(this, {
+        _viewModel.setEmployeeList.observe(this) {
             if (it == null || it.isEmpty()) {
                 uiUtil.showToast("Something went wrong")
                 return@observe
@@ -108,9 +107,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             employeeName.add("Select Employee")
             val list = employeeList.map { it.name }
             employeeName.addAll(list as (ArrayList<String>))
-            binding.spnrEmployee.adapter =
-                ArrayAdapter(this, android.R.layout.simple_list_item_1, employeeName)
-        })
+            binding.spnrEmployee.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, employeeName)
+        }
     }
 
     override fun onBackPressed() {
