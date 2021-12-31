@@ -1,4 +1,4 @@
-package com.example.signpost.ui.main
+package com.example.signpost.ui.attendance
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.networkdomain.model.AttendanceDto
 import com.example.networkdomain.model.EmployeeDto
-import com.example.networkdomain.model.RequestAttendanceDto
 import com.example.networkdomain.network.Resources
 import com.example.networkdomain.usecase.GetAllEmployeeUseCase
 import com.example.networkdomain.usecase.GetAttendanceUseCase
@@ -20,8 +19,7 @@ import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val getAllEmployeeUseCase: GetAllEmployeeUseCase,
+class AttendanceViewModel @Inject constructor(
     private val getAttendanceUseCase: GetAttendanceUseCase
 ) : ViewModel() {
 
@@ -29,8 +27,8 @@ class MainViewModel @Inject constructor(
     val viewState = _viewState.toLiveData()
 
 
-    private val _setEmployeeList = MutableLiveData<List<EmployeeDto>?>()
-    val setEmployeeList = _setEmployeeList.toLiveData()
+    private val _setAttendanceList = MutableLiveData<List<AttendanceDto>?>()
+    val setAttendanceList = _setAttendanceList.toLiveData()
 
     private val _setError = MutableLiveData<String?>()
     val setError = _setError.toLiveData()
@@ -38,30 +36,7 @@ class MainViewModel @Inject constructor(
 
     fun getAllEmployee() {
         _viewState.postValue(ViewState.Loading)
-        getAllEmployeeUseCase().onEach { result ->
-            when (result) {
-                is Resources.Success -> {
-                    _setEmployeeList.postValue(result.data)
-                    _viewState.postValue(ViewState.Success())
-                }
-                is Resources.Error -> {
-                    _setError.postValue(result.message)
-                    _viewState.postValue(ViewState.Error())
-                }
-                is Resources.Loading -> {
-                    _viewState.postValue(ViewState.Loading)
-                }
-            }
-        }.launchIn(viewModelScope + exceptionHandler)
-    }
-
-
-    private val _setAttendanceList = MutableLiveData<AttendanceDto?>()
-    val setAttendanceList = _setAttendanceList.toLiveData()
-
-    fun getAttendance(requestAttendanceDto: RequestAttendanceDto) {
-        _viewState.postValue(ViewState.Loading)
-        getAttendanceUseCase(requestAttendanceDto).onEach { result ->
+        getAttendanceUseCase().onEach { result ->
             when (result) {
                 is Resources.Success -> {
                     _setAttendanceList.postValue(result.data)
