@@ -15,6 +15,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
+import com.google.firebase.database.DatabaseReference
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -60,5 +61,16 @@ object NetworkModule {
         okHttpClient: OkHttpClient
     ): Retrofit = NetworkClient.provideRetrofit(okHttpClient)
 
+    @Provides
+    @Singleton
+    fun provideFirebase(): FirebaseDatabase {
+        return FirebaseDatabase.getInstance()
+    }
+    @Provides
+    @Singleton
+    fun provideDatabase(firebaseDatabase: FirebaseDatabase): DatabaseReference {
+        val dtr=firebaseDatabase.getReference("Main")
+        return dtr
+    }
 
 }
