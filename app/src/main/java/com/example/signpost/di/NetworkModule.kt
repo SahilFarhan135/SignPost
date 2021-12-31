@@ -30,8 +30,20 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCoinRepository(api: AttendanceApi): AttendanceRepository {
+    fun provideAttendanceRepository(api: AttendanceApi): AttendanceRepository {
         return AttendanceRepositoryImpl(api)
+    }
+
+  @Provides
+    @Singleton
+    fun provideGetAttendanceUseCase(repo: AttendanceRepository): GetAttendanceUseCase {
+        return GetAttendanceUseCase(repo)
+    }
+
+   @Provides
+    @Singleton
+    fun provideGetAllEmployeeUseCase(repo: AttendanceRepository): GetAllEmployeeUseCase {
+        return GetAllEmployeeUseCase(repo)
     }
 
     @Singleton
@@ -71,6 +83,12 @@ object NetworkModule {
     fun provideDatabase(firebaseDatabase: FirebaseDatabase): DatabaseReference {
         val dtr=firebaseDatabase.getReference("Main")
         return dtr
+    }
+
+    @Provides
+    @Singleton
+    fun provideFireBaseRepository(): FirebaseRepository {
+        return FirebaseRepository()
     }
 
 }

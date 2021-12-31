@@ -20,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AttendanceViewModel @Inject constructor(
-    private val getAttendanceUseCase: GetAttendanceUseCase
+    private val getAttendanceUseCase: GetAttendanceUseCase,
+    private val firebaseRepository:FirebaseRepository
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData<ViewState>(ViewState.Idle)
@@ -33,6 +34,12 @@ class AttendanceViewModel @Inject constructor(
     private val _setError = MutableLiveData<String?>()
     val setError = _setError.toLiveData()
 
+
+    fun saveDataToFireBase(obj: FirebaseObj){
+        _viewState.postValue(ViewState.Loading)
+        val result= firebaseRepository.sendDataToFirebase(obj)
+        _viewState.postValue(ViewState.Success())
+    }
 
     fun getAllEmployee() {
         _viewState.postValue(ViewState.Loading)
