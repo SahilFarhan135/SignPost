@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="employee_attendance_monitor">Employee Attendance Monitor</string>
+    <string name="txt_date_format_yyyy_mm_dd">YYYY:MM:DD</string>
 </resources>

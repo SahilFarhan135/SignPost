@@ -7,10 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityOptionsCompat
 
 class Navigator(var context: AppCompatActivity) {
 
@@ -19,6 +16,24 @@ class Navigator(var context: AppCompatActivity) {
         noTransitionAnimation: Boolean = false
     ) {
         val (activity, intent) = getActivityIntent(activityClass)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q || noTransitionAnimation) {
+            activity.startActivity(intent)
+        } else {
+            activity.startActivity(
+                intent, ActivityOptions.makeSceneTransitionAnimation(activity)
+                    .toBundle()
+            )
+        }
+    }
+
+
+    fun startActivityWithData(
+        activityClass: Class<out Activity>,
+        bundle: Bundle,
+        noTransitionAnimation: Boolean = false
+    ) {
+        val (activity, intent) = getActivityIntent(activityClass)
+        intent.putExtras(bundle)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q || noTransitionAnimation) {
             activity.startActivity(intent)
         } else {
@@ -59,8 +74,6 @@ class Navigator(var context: AppCompatActivity) {
         }
         activity.finish()
     }
-
-
 
 
     private fun getActivityIntent(activityClass: Class<out Activity>): Pair<AppCompatActivity, Intent> {

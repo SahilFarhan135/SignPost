@@ -9,9 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.signpost.util.UiUtil
-import javax.inject.Inject
 
 abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 

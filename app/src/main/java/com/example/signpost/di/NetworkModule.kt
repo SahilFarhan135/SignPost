@@ -1,12 +1,19 @@
 package com.example.signpost.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import com.example.networkdomain.api.AttendanceApi
 import com.example.networkdomain.network.NetworkClient
 import com.example.networkdomain.network.NetworkManager
-import com.example.networkdomain.repository.truckrepository.AttendanceRepository
-import com.example.networkdomain.repository.truckrepository.AttendanceRepositoryImpl
+import com.example.networkdomain.repo.impl.AttendanceRepositoryImpl
+import com.example.networkdomain.repo.impl.FirebaseRepository
+import com.example.networkdomain.repo.interaface.AttendanceRepository
+import com.example.networkdomain.storage.PrefsUtil
+import com.example.networkdomain.usecase.GetAllEmployeeUseCase
+import com.example.networkdomain.usecase.GetAttendanceUseCase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +22,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
-import com.google.firebase.database.DatabaseReference
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -27,6 +33,21 @@ object NetworkModule {
         return retrofit.create(AttendanceApi::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(
+        context: Context
+    ): SharedPreferences {
+        return context.getSharedPreferences(
+            PrefsUtil.SHARED_PREFERENCE_ID, Context.MODE_PRIVATE
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providePrefUtils(sharedPreferences: SharedPreferences): PrefsUtil {
+        return PrefsUtil(sharedPreferences)
+    }
 
     @Provides
     @Singleton
@@ -34,13 +55,13 @@ object NetworkModule {
         return AttendanceRepositoryImpl(api)
     }
 
-  @Provides
+    @Provides
     @Singleton
     fun provideGetAttendanceUseCase(repo: AttendanceRepository): GetAttendanceUseCase {
         return GetAttendanceUseCase(repo)
     }
 
-   @Provides
+    @Provides
     @Singleton
     fun provideGetAllEmployeeUseCase(repo: AttendanceRepository): GetAllEmployeeUseCase {
         return GetAllEmployeeUseCase(repo)
@@ -78,17 +99,18 @@ object NetworkModule {
     fun provideFirebase(): FirebaseDatabase {
         return FirebaseDatabase.getInstance()
     }
+
     @Provides
     @Singleton
     fun provideDatabase(firebaseDatabase: FirebaseDatabase): DatabaseReference {
-        val dtr=firebaseDatabase.getReference("Main")
+        val dtr = firebaseDatabase.getReference("Main")
         return dtr
     }
 
     @Provides
     @Singleton
-    fun provideFireBaseRepository(): FirebaseRepository {
-        return FirebaseRepository()
+    fun provideFireBaseRepository(databaseReference: DatabaseReference): FirebaseRepository {
+        return FirebaseRepository(databaseReference)
     }
 
 }

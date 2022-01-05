@@ -8,8 +8,8 @@ data class RequestAttendanceDto(
     var emp_id: Int? = null,
     var from_dt: String? = null,
     var to_dt: String? = null,
-   
-):Parcelable
+
+    ) : Parcelable
 /*
 * emp_id=1603
 from_dt=2019-08-01

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,9 +17,9 @@
             android:id="@+id/tv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_margin="5dp"
             android:gravity="center"
-            android:text="August 2019"
+            android:padding="5dp"
             android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@id/appbar" />
 
@@ -29,6 +30,7 @@
             android:layout_marginStart="2dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="2dp"
+            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_date">
@@ -41,7 +43,8 @@
                 android:text="Date of Month"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@id/guideline"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/label_tym"
@@ -51,7 +54,8 @@
                 android:text="No of Hours Logged"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guideline" />
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
@@ -67,7 +71,7 @@
             android:id="@+id/rv_attendance"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:margin="1dp"
+            android:layout_margin="1dp"
             app:layout_constraintBottom_toTopOf="@id/cl_bottom"
             app:layout_constraintTop_toBottomOf="@id/cl_labels" />
 
@@ -75,10 +79,98 @@
             android:id="@+id/cl_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_attendance">
 
 
+            <LinearLayout
+                android:id="@+id/ll_logged"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ll_present"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/label_logged_hours"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="Hours Logged"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_logged_hours"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:textColor="@color/black"
+                    tools:text="Hours Logged" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_present"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ll_absent"
+                app:layout_constraintStart_toEndOf="@id/ll_logged"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/label_present"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="Present"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_present"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:textColor="@color/black"
+                    tools:text="Hours Logged" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_absent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ll_present"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/label_absent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="Absent"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_absent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:textColor="@color/black"
+                    tools:text="Hours Logged" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

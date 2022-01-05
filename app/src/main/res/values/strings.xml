@@ -2,4 +2,5 @@
     <string name="app_name">SignPost</string>
     <string name="employee_attendance_monitor">Employee Attendance Monitor</string>
     <string name="view_attendance_report">View Attendance Report</string>
+    <string name="txt_date_format_yyyy_mm_dd">YYYY:MM:DD</string>
 </resources>

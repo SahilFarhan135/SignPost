@@ -19,7 +19,8 @@ class FirebaseCloudMessage : FirebaseMessagingService() {
 
     private fun createNotificationForChat(p0: RemoteMessage) {
         val notificationBuilder = NotificationBuilder(this)
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         MainScope().launch {
             val notification = notificationBuilder.buildNotificationForChat(p0)
             notificationManager.notify("chatRequestResponse".hashCode(), notification)

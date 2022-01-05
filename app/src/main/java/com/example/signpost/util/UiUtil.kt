@@ -1,5 +1,6 @@
 package com.example.signpost.util
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.view.View
@@ -8,6 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.signpost.base.BaseActivity
 import com.google.android.material.snackbar.Snackbar
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class UiUtil(private val context: Context) {
 
@@ -79,4 +83,61 @@ fun Context.hideKeyboard(view: View) {
     val inputMethodManager =
         getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun String.toDate(): Int {
+    val c = Calendar.getInstance()
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    try {
+        c.time = sdf.parse(this)
+    } catch (e: ParseException) {
+
+    }
+    return c[Calendar.DATE]
+}
+
+fun findDifference(
+    start_date: String?,
+    end_date: String?
+): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    if (start_date.isNullOrEmpty() || end_date.isNullOrEmpty() || start_date.equals(
+            "null",
+            true
+        ) || end_date.equals("null", true)
+    ) {
+        return "8"
+    }
+    val d1 = sdf.parse(start_date)
+    val d2 = sdf.parse(end_date)
+    val MILLI_TO_HOUR = 1000 * 60 * 60;
+    return ((d2.time - d1.time) / MILLI_TO_HOUR).toString();
+}
+
+fun findNoOfDaysBetweenDates(firstDate: String, lastDate: String): String {
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    val d1 = sdf.parse(firstDate)
+    val d2 = sdf.parse(lastDate)
+    val milliToDay = (24 * 60 * 60 * 1000)
+    val days = (d2.time - d1.time) / milliToDay + 1
+    return days.toString()
+}
+
+fun String.isWeekend(): Boolean {
+    val cal = Calendar.getInstance()
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    val d1 = sdf.parse(this)
+    cal.time = d1
+    val day = cal[Calendar.DAY_OF_WEEK]
+    return day == Calendar.SATURDAY || day == Calendar.SUNDAY
+}
+
+fun String.getMonthInString():String{
+    val cal = Calendar.getInstance()
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    val d1 = sdf.parse(this)
+    cal.time = d1
+    val month = SimpleDateFormat("MMMM").format(cal.time);
+    return month
 }

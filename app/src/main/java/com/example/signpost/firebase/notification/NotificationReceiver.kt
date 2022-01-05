@@ -11,11 +11,11 @@ import android.net.Uri
 import android.os.Build
 
 
-class NotificationReceiver: BroadcastReceiver() {
+class NotificationReceiver : BroadcastReceiver() {
     private var mMediaPlayer: MediaPlayer? = null
 
     override fun onReceive(context: Context, intent: Intent) {
-        if(isAppIsInBackground(context)){
+        if (isAppIsInBackground(context)) {
             playNotificationSound(context)
         }
     }

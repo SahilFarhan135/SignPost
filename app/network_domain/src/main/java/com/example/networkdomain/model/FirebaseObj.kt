@@ -2,17 +2,18 @@ package com.example.networkdomain.model
 
 import java.io.Serializable
 
-class FirebaseObj :Serializable{
-    var mobileMake: String? = "",
-    var mobileModel: String? = "",
-    var androidVersion: String? = "",
-    var appVersion: String? = "",
-    var employeeName: String? = "",
-    var fromDate: String? = "",
-    var toDate: String? = "",
-    var responseStatus: String? = "",
-    var currentDateAndTime: String? = "",
-    constructor() {}
+class FirebaseObj : Serializable {
+    var mobileMake: String? = ""
+    var mobileModel: String? = ""
+    var androidVersion: String? = ""
+    var appVersion: String? = ""
+    var employeeName: String? = ""
+    var fromDate: String? = ""
+    var toDate: String? = ""
+    var responseStatus: String? = ""
+    var currentDateAndTime: String? = ""
+
+    constructor()
     constructor(
         mobileMake: String,
         mobileModel: String,
@@ -21,7 +22,7 @@ class FirebaseObj :Serializable{
         employeeName: String,
         fromDate: String,
         toDate: String,
-        responseStatus: Int,
+        responseStatus: String,
         currentDateAndTime: String
     ) {
         this.mobileMake = mobileMake

@@ -1,30 +1,19 @@
 package com.example.networkdomain.usecase
 
-import android.util.Log
 import com.example.networkdomain.model.AttendanceDto
-import com.example.networkdomain.model.RequestAttendanceDto
-import com.example.networkdomain.network.Resources
-import com.example.networkdomain.repository.truckrepository.AttendanceRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import retrofit2.HttpException
-import java.io.IOException
+import com.example.networkdomain.network.NetworkResult
+import com.example.networkdomain.network.safeApiCall
+import com.example.networkdomain.repo.interaface.AttendanceRepository
+import com.example.networkdomain.usecase.base.BaseSuspendUseCase
 import javax.inject.Inject
 
 class GetAttendanceUseCase @Inject constructor(
     private val repository: AttendanceRepository
-) {
-    operator fun invoke(requestAttendanceDto: RequestAttendanceDto): Flow<Resources<AttendanceDto>> =
-        flow {
-            try {
-                emit(Resources.Loading())
-                val attendanceResult = repository.getAttendance(requestAttendanceDto)
-                emit(Resources.Success(attendanceResult))
-            } catch (e: HttpException) {
-                emit(Resources.Error(e.localizedMessage ?: "Something went wrong"))
-                Log.d("OK", e.localizedMessage.plus(e.code()))
-            } catch (e: IOException) {
-                emit(Resources.Error("Couldn't connect to server"))
-            }
+) : BaseSuspendUseCase<NetworkResult<List<AttendanceDto>>, Triple<String, String, String>>() {
+    override suspend fun perform(params: Triple<String, String, String>): NetworkResult<List<AttendanceDto>> {
+        return when (val result = safeApiCall { repository.getAttendance(params) }) {
+            is NetworkResult.Success -> NetworkResult.Success(result.body, result.responseCode)
+            is NetworkResult.Failure -> result
         }
+    }
 }

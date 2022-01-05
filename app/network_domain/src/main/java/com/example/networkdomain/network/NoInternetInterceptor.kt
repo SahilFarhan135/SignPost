@@ -18,6 +18,4 @@ class NoInternetInterceptor(private val networkManager: NetworkManager) : Interc
     }
 }
 
-class NoInternetException : IOException() {
-
-}
+class NoInternetException : IOException()

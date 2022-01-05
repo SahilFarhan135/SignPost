@@ -48,7 +48,7 @@ class NetworkManager(private val connectivityManager: ConnectivityManager) {
             super.onLost(network)
             synchronized(this@NetworkManager) {
                 if (!isInternetAvailable()) {
-                  Log.e("Ok","Network onLost $network")
+                    Log.e("Ok", "Network onLost $network")
                     listeners.forEach { it.onAvailability(!isInternetAvailable(), network) }
                 }
             }

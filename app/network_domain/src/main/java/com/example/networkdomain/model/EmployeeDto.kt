@@ -5,6 +5,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class EmployeeDto(
-	val name: String? = null,
-	val empId: String? = null
+    val name: String? = null,
+    val emp_id: String? = null
 ) : Parcelable

@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class AttendanceDto(
-	val entryAt: String? = null,
-	val exitAt: String? = null,
-	val empId: String? = null
+    val entry_at: String? = null,
+    val exit_at: String? = null,
+    val emp_Id: String? = null
 ) : Parcelable

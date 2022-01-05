@@ -1,46 +1,57 @@
-package com.app.ilmainstitute.ui.teacher.admission_request
+package com.example.signpost.ui.attendance.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.ilmainstitute.databinding.RvAdmsnRequestListBinding
-import com.app.ilmainstitute.ui.admission.AdmissionFormModel
+import com.example.networkdomain.model.AttendanceDto
+import com.example.signpost.databinding.IndiviewAttendanceItemBinding
+import com.example.signpost.util.findDifference
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AttendanceAdapter :
     RecyclerView.Adapter<AttendanceAdapter.AttendanceViewHolder>() {
 
     private val items = ArrayList<AttendanceDto>()
+    val c: Calendar = Calendar.getInstance()
 
-    fun submitList(studentList:AttendanceDto) {
+    var strDays =
+        arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+
+    fun submitList(attendance: ArrayList<AttendanceDto>) {
         items.clear()
+        items.addAll(attendance)
         notifyDataSetChanged()
     }
 
     inner class AttendanceViewHolder(private val binding: IndiviewAttendanceItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: AttendanceDto) {
-            binding.tvDate.text = getWeekday(item.entryAt)
-            binding.tvTime.text = getNoOfHours(item.entryAt,item.exitAt)
+            val local = item.entry_at?.split("-")
+            if (local.isNullOrEmpty().not() && local?.get(2).isNullOrEmpty().not()) {
+                binding.tvDate.text = local?.get(2) ?: "---"
+            }
+            val dif = findDifference(item.entry_at.toString(), item.exit_at.toString())
+            binding.tvTime.text = if (dif.equals("0", true)) "Weekend" else dif
         }
 
     }
 
-    private fun getNoOfHours(entrydate:String,exitDate:String):String{
-        return ""
-    }
-    private fun getWeekday(entrydate:String):String{
-        return ""
-    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttendanceViewHolder {
         val binding =
-            IndiviewAttendanceItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            IndiviewAttendanceItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return AttendanceViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: AttendanceViewHolder, position: Int) {
-        holder.bind(itemList[position])
+        holder.bind(items[position])
     }
 
-    override fun getItemCount(): Int = itemList.size
+    override fun getItemCount(): Int = items.size
 
 }
